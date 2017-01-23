@@ -27,7 +27,7 @@ public class MQTTConfig {
         DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
         factory.setServerURIs("tcp://m20.cloudmqtt.com:10935");
         factory.setUserName("bqvzionl");
-        factory.setPassword("Xu6eSC39cf1b");
+        factory.setPassword("DXu6eSC39cf1bTC");
         return factory;
     }
 
