@@ -1,14 +1,14 @@
 package com.catapult.lolcat;
 
-import com.catapult.lolcat.config.MQTTConfig;
+import com.catapult.lolcat.config.AMQPConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
 @EnableAutoConfiguration
-@ComponentScan({"com.catapult.lolcat.web","com.catapult.lolcat.service"})
-@Import(MQTTConfig.class)
+@ComponentScan({"com.catapult.lolcat.web","com.catapult.lolcat.service","com.catapult.lolcat.component"})
+@Import(AMQPConfig.class)
 public class LolCatApplication {
 
 

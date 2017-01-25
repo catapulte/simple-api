@@ -13,17 +13,17 @@ import static org.assertj.core.api.Assertions.*;
  */
 public class CoordTest {
 
-    @Test
-    public void test1(){
-        DecimalCoord decimalCoord = new DecimalCoord(4806.9136f, -140.4197f);
-        assertThat(decimalCoord.getDecimalCoord()).isEqualTo(new float[]{48.115227f,-1.6736615f});
-    }
-
-    @Test
-    public void test2(){
-        DecimalCoord decimalCoord = new DecimalCoord("4806.9136N", "140.4197W");
-        assertThat(decimalCoord.getDecimalCoord()).isEqualTo(new float[]{48.115227f,-1.6736615f});
-    }
+//    @Test
+//    public void test1(){
+//        DecimalCoord decimalCoord = new DecimalCoord(4806.9136f, -140.4197f);
+//        assertThat(decimalCoord.getDecimalCoord()).isEqualTo(new float[]{48.115227f,-1.6736615f});
+//    }
+//
+//    @Test
+//    public void test2(){
+//        DecimalCoord decimalCoord = new DecimalCoord("4806.9136N", "140.4197W");
+//        assertThat(decimalCoord.getDecimalCoord()).isEqualTo(new float[]{48.115227f,-1.6736615f});
+//    }
 
     @Test
     public void test3() throws ParseException {
