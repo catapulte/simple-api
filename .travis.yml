@@ -1,3 +1,12 @@
 language: java
 jdk:
-  - oraclejdk8
+- oraclejdk8
+before_deploy:
+- mv target/simple-api-*.jar target/simple-api.jar
+deploy:
+  provider: releases
+  api_key:
+    secure: clIuTVoNQN46+0b7ybGfwiGLI6xCBTS0exVccCGeiTqXcpGrwofa1Az10xqQrwpQYImWdMad+WOrxVj3RnYNt1p34fPmNkesaCSekUClaM6rVsqRLodDldKAkOdZatIOsbxDCq4bfeKCFpb7FF77HuNOMXqhyiIqCvsSB2mFl3sD9qJd4URQvHRqWYUUkvoPNGfJ/icIdRhvz3s99xT05Z9iBRt5LhWVOkggmEvGb9uoli/Q514Cf7tqySLX2N+T8THGuFtmcPbg1f1ZrlPiW9Nph1w13BQ0q9OvzeeMHAHUkiCebwJRYlw5E03r4eud5CgMLqdqDKsPQJeJgOqaRElILWvYrd2mz48S0lmjFx3/vAu+SsqCPwGV0YHTpMF3YhSl2fqpRZ9Z2XLHKPJIOyYww0aSFNbNP4Ydjy/mt0A6F62YzoI1lZOGs5cA94eIEjLher/gBe9mohsmETvzufacY57jeZswkuS/ojWC0uDhh3K9hVF2uLops06ydwIi2xgh/jlVt1RAotZ9rZhqCtsqNVjTJb/K/P9E1R6Z9rLCYo9Bm1G1b06RtFOrLZ0aMw2lJ6nc0M5fF9mulesZ3SQkhRcWenIfOEhsUQr6fj24k79Oq9v/jGN7zlFwjbfRnntKBqUNj2x3nepZ2ioFj6q+BsRTVYybdBOHHW7EO6I=
+  file: target/simple-api.jar
+  on:
+    tags: true
