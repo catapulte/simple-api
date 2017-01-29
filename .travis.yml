@@ -9,6 +9,6 @@ before_deploy:
 deploy:
   provider: script
   skip_cleanup: true
-  script: scp -i target/simple-api-*.jar lolcat@lolcat.passoire.net:~/simple-api.jar
+  script: scp -i id_rsa target/simple-api-*.jar lolcat@lolcat.passoire.net:~/simple-api.jar
   on:
     branch: master
