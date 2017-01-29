@@ -11,9 +11,21 @@ public class Cat {
 
     private double[] position;
 
+    private double angle;
+
     private long timestamp;
 
     private double vbat;
+
+    private int satelliteNb;
+
+    private double altitude;
+
+    private double temperature;
+
+    private double humidity;
+
+
 
 
 }
