@@ -26,7 +26,7 @@ public class RawService {
     public void processRawData(String rawData) {
 
         try {
-            String regexp = "#(.*)\\|(.*)\\|(.*)\\|(.*)\\|(.*)\\|(.*)\\|(.*)#";
+            String regexp = "#(.*)\\|(.*)\\|(.*)\\|(.*)\\|(.*)\\|(.*)\\|(.*)\\|(.*)\\|(.*)\\|(.*)#";
 
             Pattern pattern = Pattern.compile(regexp);
             Matcher matcher = pattern.matcher(rawData);
@@ -43,17 +43,29 @@ public class RawService {
                 cat.setPosition(decimalCoord.getDecimalCoord());
 
                 String angle = matcher.group(4);
-                String alt = matcher.group(5);
-                String ts = matcher.group(6);
+                cat.setAngle(Double.parseDouble(angle));
 
+                String alt = matcher.group(5);
+                cat.setAltitude(Double.parseDouble(alt));
+
+
+                String satellitesNb = matcher.group(6);
+                cat.setSatelliteNb(Integer.parseInt(satellitesNb));
+
+                String ts = matcher.group(7);
                 Date parse = dateFormat.parse(ts);
                 cat.setTimestamp(parse.getTime());
 
-                double vbat = Double.valueOf(matcher.group(7));
+                String temperature = matcher.group(8);
+                cat.setTemperature(Double.parseDouble(temperature));
+
+                String humidity = matcher.group(9);
+                cat.setHumidity(Double.parseDouble(humidity));
+
+                double vbat = Double.valueOf(matcher.group(10));
                 cat.setVbat(vbat);
 
                 catRepository.save(cat);
-
 
             }
         } catch (Exception e) {
