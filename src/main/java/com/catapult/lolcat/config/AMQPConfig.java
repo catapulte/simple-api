@@ -1,52 +1,53 @@
 package com.catapult.lolcat.config;
 
-import com.catapult.lolcat.component.Receiver;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.QueueBuilder;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.amqp.support.converter.SimpleMessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.converter.StringMessageConverter;
 
 /**
  * Created by erwann on 25/01/17.
  */
 @Configuration
 public class AMQPConfig {
-    final static String queueName = "amqp";
-
-
 
     @Bean
-    Queue queue() {
-        return new Queue(queueName, true);
+    ConnectionFactory rabbitmqConnectionFactory(@Value("${amqp.host:localhost}") String host,
+                                                @Value("${amqp.port:5672}") int port,
+                                                @Value("${amqp.host:guest}") String user,
+                                                @Value("${amqp.host:guest}") String pass) {
+        CachingConnectionFactory cf = new CachingConnectionFactory();
+        cf.setHost(host);
+        cf.setPort(port);
+        cf.setUsername(user);
+        cf.setPassword(pass);
+        return cf;
     }
 
     @Bean
-    TopicExchange exchange() {
-        return new TopicExchange("spring-boot-exchange");
+    RabbitAdmin admin(ConnectionFactory rabbitmqConnectionFactory) {
+        RabbitAdmin admin = new RabbitAdmin(rabbitmqConnectionFactory);
+        admin.declareQueue(catDataQueue());
+        return admin;
     }
 
     @Bean
-    Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(queueName);
+    Queue catDataQueue() {
+        return QueueBuilder.durable("cat.data")
+                .build();
     }
 
     @Bean
-    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
-                                             MessageListenerAdapter listenerAdapter) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(queueName);
-        container.setMessageListener(listenerAdapter);
-        return container;
-    }
-
-    @Bean
-    MessageListenerAdapter listenerAdapter(Receiver receiver) {
-        return new MessageListenerAdapter(receiver, "receiveMessage");
+    MessageConverter stringMessageConverter() {
+        return new SimpleMessageConverter();
     }
 }
