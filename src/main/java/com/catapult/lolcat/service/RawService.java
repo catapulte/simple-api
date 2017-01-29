@@ -6,6 +6,7 @@ import com.catapult.lolcat.repository.CatRepository;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,6 +68,8 @@ public class RawService {
 
                 catRepository.save(cat);
 
+            } else {
+                LOGGER.error("invalid message format: {}", rawData);
             }
         } catch (Exception e) {
             LOGGER.error("too bad", e);
